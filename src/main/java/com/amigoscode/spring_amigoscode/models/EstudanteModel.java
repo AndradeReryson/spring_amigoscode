@@ -1,9 +1,11 @@
 package com.amigoscode.spring_amigoscode.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 
+import com.amigoscode.spring_amigoscode.dtos.EstudanteCursoDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -11,15 +13,44 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ColumnResult;
+import jakarta.persistence.ConstructorResult;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedNativeQuery;
+import jakarta.persistence.SqlResultSetMapping;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
+@NamedNativeQuery(
+    name = "findAllEstudantesWithCurso",
+    query = "SELECT e.id , e.nome_estudante, c.nome_curso, c.descricao, c.carga_horaria "+
+            "FROM Estudantes e "+ 
+            "INNER JOIN Cursos c "+ 
+            "ON e.curso_id = c.id",
+    resultClass = EstudanteCursoDTO.class,
+    resultSetMapping = "estudanteCursoDTO_mapping"
+)
+
+@SqlResultSetMapping(
+    name = "estudanteCursoDTO_mapping",
+    classes = {
+        @ConstructorResult(
+            targetClass = EstudanteCursoDTO.class,
+            columns = {
+                @ColumnResult(name = "id",              type = Long.class),
+                @ColumnResult(name = "nome_estudante",  type = String.class),
+                @ColumnResult(name = "nome_curso",      type = String.class),
+                @ColumnResult(name = "descricao",       type = String.class),
+                @ColumnResult(name = "carga_horaria",   type = BigDecimal.class)
+            }
+        )
+    }
+)
 @Entity
 @Table(name = "Estudantes")
 public class EstudanteModel implements Serializable{

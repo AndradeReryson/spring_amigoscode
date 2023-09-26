@@ -12,11 +12,13 @@ public class EstudanteCursoDTO{
 
     EstudanteCursoDTO(){}
 
-    public EstudanteCursoDTO(Long id, String nome_estudante, String email, Integer idade, String nome_curso,
-            String descricao, BigDecimal carga_horaria) {
+    public EstudanteCursoDTO(Long id, 
+                                String nome_estudante,
+                                String nome_curso,
+                                String descricao, 
+                                BigDecimal carga_horaria) {
         this.id = id;
         this.nome_estudante = nome_estudante;
-        this.idade = idade;
         this.nome_curso = nome_curso;
         this.descricao = descricao;
         this.carga_horaria = carga_horaria;
