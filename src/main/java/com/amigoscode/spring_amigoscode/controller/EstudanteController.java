@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.amigoscode.spring_amigoscode.dtos.EstudanteBasicoDTO;
+import com.amigoscode.spring_amigoscode.dtos.EstudanteCursoDTO;
 import com.amigoscode.spring_amigoscode.models.EstudanteModel;
 import com.amigoscode.spring_amigoscode.services.EstudanteService;
 
@@ -30,6 +31,14 @@ public class EstudanteController {
 
         return ResponseEntity.status(200).body(lista);
     }
+
+    @GetMapping("estudanteComCurso")
+    public ResponseEntity<List<EstudanteCursoDTO>> listaEstudantesComCurso(){
+        List<EstudanteCursoDTO> lista = service.getEstudantesWithCursos();
+
+        return ResponseEntity.status(200).body(lista);
+    }
+
 
     @GetMapping("{id}")
     public ResponseEntity<EstudanteBasicoDTO> acharEstudante(@PathVariable("id") Long id){
@@ -56,4 +65,5 @@ public class EstudanteController {
             service.atualizarEstudante(id, estudante)
         );
     }
+
 }

@@ -70,6 +70,13 @@ public class EstudanteCursoDTO{
         this.carga_horaria = carga_horaria;
     }
 
-    
+    public String toString(){
+        return this.id+", "+
+                this.nome_estudante+", "+
+                this.idade+", "+
+                this.nome_curso+", "+
+                this.descricao+", "+
+                this.carga_horaria;
+    }
     
 }

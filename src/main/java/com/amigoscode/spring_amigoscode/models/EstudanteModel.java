@@ -41,7 +41,7 @@ public class EstudanteModel implements Serializable{
     private LocalDate data_nasc;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "curso_id", nullable = false)
     private CursoModel curso;
 
     // Sinaliza que esse campo não vai ser uma coluna no banco. Será calculado no getIdade
@@ -53,19 +53,23 @@ public class EstudanteModel implements Serializable{
     public EstudanteModel(Long id,
                             String nome_estudante,
                             String email,
-                            LocalDate data_nasc){
+                            LocalDate data_nasc,
+                            CursoModel curso){
         this.id = id;
         this.nome_estudante = nome_estudante;
         this.email = email;
         this.data_nasc = data_nasc;
+        this.curso = curso;
     }
 
     public EstudanteModel(String nome_estudante, 
                             String email, 
-                            LocalDate data_nasc) {
+                            LocalDate data_nasc,
+                            CursoModel curso) {
         this.nome_estudante = nome_estudante;
         this.email = email;
         this.data_nasc = data_nasc;
+        this.curso = curso;
     }
 
     public Long getId() {
@@ -107,6 +111,14 @@ public class EstudanteModel implements Serializable{
 
     public void setIdade(Integer idade) {
         this.idade = idade;
+    }
+
+    public CursoModel getCurso() {
+        return curso;
+    }
+
+    public void setCurso(CursoModel curso) {
+        this.curso = curso;
     }
 
     

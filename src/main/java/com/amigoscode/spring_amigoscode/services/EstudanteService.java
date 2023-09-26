@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.amigoscode.spring_amigoscode.dtos.EstudanteBasicoDTO;
+import com.amigoscode.spring_amigoscode.dtos.EstudanteCursoDTO;
 import com.amigoscode.spring_amigoscode.models.EstudanteModel;
 import com.amigoscode.spring_amigoscode.repository.EstudanteRepository;
 
@@ -37,6 +38,12 @@ public class EstudanteService {
         Optional<EstudanteBasicoDTO> opt_dto = Optional.of(dto);
         
         return opt_dto;
+    }
+
+    public List<EstudanteCursoDTO> getEstudantesWithCursos(){
+        Optional<List<EstudanteCursoDTO>> lista_dtos = repository.findAllEstudantesWithCurso();
+
+        return lista_dtos.get();
     }
 
     public EstudanteModel addEstudante(EstudanteModel estudante){

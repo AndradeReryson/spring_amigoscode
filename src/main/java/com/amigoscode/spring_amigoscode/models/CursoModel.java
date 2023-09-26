@@ -2,12 +2,15 @@ package com.amigoscode.spring_amigoscode.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +30,9 @@ public class CursoModel implements Serializable{
     @Column(nullable = false, precision = 7, scale = 2)
     private BigDecimal carga_horaria;
 
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<EstudanteModel> lista_estudantes;
+    
     CursoModel(){}
 
     public CursoModel(Long id, 
@@ -77,6 +83,14 @@ public class CursoModel implements Serializable{
 
     public void setCarga_horaria(BigDecimal carga_horaria) {
         this.carga_horaria = carga_horaria;
+    }
+
+    public Set<EstudanteModel> getLista_estudantes() {
+        return lista_estudantes;
+    }
+
+    public void setLista_estudantes(Set<EstudanteModel> lista_estudantes) {
+        this.lista_estudantes = lista_estudantes;
     }
 
     
