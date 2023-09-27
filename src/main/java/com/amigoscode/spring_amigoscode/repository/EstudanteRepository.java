@@ -16,6 +16,7 @@ public interface EstudanteRepository extends JpaRepository<EstudanteModel, Long>
     @Query(value = "SELECT * FROM Estudantes e WHERE e.email = ?1", nativeQuery = true)
     Optional<EstudanteModel> findByEmail(String email);
 
+    // Esta query está definida dentro de EstudanteModel
     @Query(nativeQuery = true, name = "findAllEstudantesWithCurso")
     Optional<List<EstudanteCursoDTO>> findAllEstudantesWithCurso();
 }

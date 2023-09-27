@@ -5,22 +5,22 @@ import java.math.BigDecimal;
 public class EstudanteCursoDTO{
     private Long id;
     private String nome_estudante;
+    private String email;
     private Integer idade;
     private String nome_curso;
-    private String descricao;
     private BigDecimal carga_horaria;
 
     EstudanteCursoDTO(){}
 
     public EstudanteCursoDTO(Long id, 
                                 String nome_estudante,
+                                String email,
                                 String nome_curso,
-                                String descricao, 
                                 BigDecimal carga_horaria) {
         this.id = id;
         this.nome_estudante = nome_estudante;
+        this.email = email;
         this.nome_curso = nome_curso;
-        this.descricao = descricao;
         this.carga_horaria = carga_horaria;
     }
 
@@ -40,6 +40,14 @@ public class EstudanteCursoDTO{
         this.nome_estudante = nome_estudante;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Integer getIdade() {
         return idade;
     }
@@ -56,14 +64,6 @@ public class EstudanteCursoDTO{
         this.nome_curso = nome_curso;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public BigDecimal getCarga_horaria() {
         return carga_horaria;
     }
@@ -75,9 +75,9 @@ public class EstudanteCursoDTO{
     public String toString(){
         return this.id+", "+
                 this.nome_estudante+", "+
+                this.email+", "+
                 this.idade+", "+
                 this.nome_curso+", "+
-                this.descricao+", "+
                 this.carga_horaria;
     }
     

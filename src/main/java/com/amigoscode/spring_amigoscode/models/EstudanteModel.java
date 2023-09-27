@@ -5,7 +5,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.amigoscode.spring_amigoscode.dtos.EstudanteCursoDTO;
+import com.amigoscode.spring_amigoscode.repository.CursoRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -28,7 +31,7 @@ import jakarta.persistence.Transient;
 
 @NamedNativeQuery(
     name = "findAllEstudantesWithCurso",
-    query = "SELECT e.id , e.nome_estudante, c.nome_curso, c.descricao, c.carga_horaria "+
+    query = "SELECT e.id , e.nome_estudante, e.email, c.nome_curso, c.carga_horaria "+
             "FROM Estudantes e "+ 
             "INNER JOIN Cursos c "+ 
             "ON e.curso_id = c.id",
@@ -44,8 +47,8 @@ import jakarta.persistence.Transient;
             columns = {
                 @ColumnResult(name = "id",              type = Long.class),
                 @ColumnResult(name = "nome_estudante",  type = String.class),
+                @ColumnResult(name = "email",           type = String.class),
                 @ColumnResult(name = "nome_curso",      type = String.class),
-                @ColumnResult(name = "descricao",       type = String.class),
                 @ColumnResult(name = "carga_horaria",   type = BigDecimal.class)
             }
         )
@@ -54,6 +57,10 @@ import jakarta.persistence.Transient;
 @Entity
 @Table(name = "Estudantes")
 public class EstudanteModel implements Serializable{
+
+    @Transient
+    @Autowired
+    CursoRepository repository;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,6 +99,18 @@ public class EstudanteModel implements Serializable{
         this.data_nasc = data_nasc;
         this.curso = curso;
     }
+
+    /* 
+    public EstudanteModel(String nome_estudante,
+                            String email,
+                            LocalDate data_nasc,
+                            Long id_curso){
+        this.nome_estudante = nome_estudante;
+        this.email = email;
+        this.data_nasc = data_nasc;
+        this.curso = repository.findById(id_curso).get();
+    }
+    */
 
     public EstudanteModel(String nome_estudante, 
                             String email, 

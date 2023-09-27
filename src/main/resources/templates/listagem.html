@@ -36,9 +36,9 @@
                 <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
+                <th scope="col">Email</th>
                 <th scope="col">Idade</th>
                 <th scope="col">Curso</th>
-                <th scope="col">Descrição</th>
                 <th scope="col">Carga Horária</th>
                 </tr>
             </thead>
@@ -46,9 +46,9 @@
                 <tr th:each="estudante : ${lista}">
                     <td th:text="*{estudante.id}"></td>
                     <td th:text="*{estudante.nome_estudante}"></td>
+                    <td th:text="*{estudante.email}"></td>
                     <td th:text="*{estudante.idade}"></td>
                     <td th:text="*{estudante.nome_curso}"></td>
-                    <td th:text="*{estudante.descricao}"></td>
                     <td th:text="*{estudante.carga_horaria}"></td>
                 </tr>
             </tbody>

@@ -41,9 +41,17 @@ public class EstudanteService {
     }
 
     public List<EstudanteCursoDTO> getEstudantesWithCursos(){
-        Optional<List<EstudanteCursoDTO>> lista_dtos = repository.findAllEstudantesWithCurso();
+        List<EstudanteCursoDTO> lista_dtos = repository.findAllEstudantesWithCurso().get();
 
-        return lista_dtos.get();
+        if(lista_dtos.size() > 0){
+        
+            for(EstudanteCursoDTO registro : lista_dtos){
+                Integer idade_do_estudante = repository.findById(registro.getId()).get().getIdade();
+                registro.setIdade(idade_do_estudante);
+            }
+        }
+
+        return lista_dtos;
     }
 
     public EstudanteModel addEstudante(EstudanteModel estudante){

@@ -72,8 +72,7 @@ public class LoadDatabase {
             return curso.get();
         } else {
             throw new IllegalStateException("Curso não existe");
-        }
-        
+        } 
     }
 
 

@@ -37,17 +37,25 @@
                 <div class="row mb-5">
                     <div class="mb-3">
                         <label for="nome" class="form-label"> Nome </label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="João Paulo da Silva">
+                        <input type="text" class="form-control" id="nome" name="nome_estudante" placeholder="João Paulo da Silva" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label"> Email </label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="joao.silva@hotmail.com">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="joao.silva@hotmail.com" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="data_nasc" class="form-label"> Data de Nascimento </label>
-                        <input type="date" class="form-control" id="data_nasc" name="data_nasc">
+                        <input type="date" class="form-control" id="data_nasc" name="data_nasc" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="curso" class="form-label"> Curso </label>
+                        <select id="curso" class="form-select" aria-label="Default select example" name="curso" required>
+                            <option selected disabled>Escolha seu curso</option>
+                            <option th:each="curso : ${cursos}" th:value="${curso.id}" th:text="${curso.nome_curso}"></option>
+                        </select>
                     </div>
 
                     <div class="my-3">
