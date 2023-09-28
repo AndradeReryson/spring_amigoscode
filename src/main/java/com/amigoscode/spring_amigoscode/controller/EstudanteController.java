@@ -60,9 +60,9 @@ public class EstudanteController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<EstudanteModel> atualizarEstudante(@PathVariable("id") long id, @RequestBody EstudanteModel estudante){
+    public ResponseEntity<EstudanteModel> atualizarEstudante(@RequestBody EstudanteModel estudante){
         return ResponseEntity.status(200).body(
-            service.atualizarEstudante(id, estudante)
+            service.atualizarEstudante(estudante)
         );
     }
 

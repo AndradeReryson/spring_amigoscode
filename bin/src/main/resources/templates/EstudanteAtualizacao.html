@@ -13,69 +13,69 @@
 <body>
     <nav class="navbar navbar-expand-lg d-flex bg-dark px-5 py-3">
         <div class="container-fluid align-items-end">
-            <a class="navbar-brand text-warning fs-4 fw-bolder" href="/">Sistema Estudantil</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <a class="navbar-brand text-warning fs-4 fw-bolder" href="/">Sistema Estudantil</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link text-white active" aria-current="page" href="/">Inicio</a>
-                <li class="nav-item dropdown">
+              <a class="nav-link text-white active" aria-current="page" href="/">Inicio</a>
+              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Cadastrar
+                  Cadastrar
                 </a>
-                    <ul class="dropdown-menu">
+                  <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/cadastro/estudante">Novo Estudante</a></li>
                     <li><a class="dropdown-item" href="/cadastro/curso">Novo Curso</a></li>
                 </ul>
-                </li>
-                <li class="nav-item dropdown">
+              </li>
+              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Consultar
+                  Consultar
                 </a>
-                    <ul class="dropdown-menu">
+                  <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/consulta/estudantes">Lista de Estudantes</a></li>
                     <li><a class="dropdown-item" href="/consulta/cursos">Lista de Cursos</a></li>
                 </ul>
-                </li>
+              </li>
             </div>
-            </div>
+          </div>
         </div>
         <div class="w-50 text-end">
-            <h4 class="container-fluid text-warning px-5 fw-bolder align-self-end m-0"> Cadastro de Estudante </h4>
+            <h4 class="container-fluid text-warning px-5 fw-bolder align-self-end m-0"> Atualização de Dados </h4>
         </div>
     </nav>
 
     <div class="container text-start my-5 mx-5 d-flex flex-column align-items-start">
         <div class="w-50"> 
             <h2 class="tw-bolder mb-3"> Novo Estudante </h2>
-            <form method="POST" action="/cadastro/estudante" modelAttribute="EstudanteModel">
+            <form method="POST" th:action="/consulta/estudantes/atualizar/${estudante.id}" modelAttribute="EstudanteModel">
                 <div class="row mb-5">
                     <div class="mb-3">
                         <label for="nome" class="form-label"> Nome </label>
-                        <input type="text" class="form-control" id="nome" name="nome_estudante" placeholder="João Paulo da Silva" required>
+                        <input type="text" class="form-control" id="nome" name="nome_estudante" placeholder="João Paulo da Silva" th:value="${estudante.nome_estudante}" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label"> Email </label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="joao.silva@hotmail.com" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="joao.silva@hotmail.com" th:value="${estudante.email}" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="data_nasc" class="form-label"> Data de Nascimento </label>
-                        <input type="date" class="form-control" id="data_nasc" name="data_nasc" required>
+                        <input type="date" class="form-control" id="data_nasc" name="data_nasc" th:value="$(estudante.data_nasc)" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="curso" class="form-label"> Curso </label>
-                        <select id="curso" class="form-select" aria-label="Default select example" name="curso" required>
+                        <select id="curso" class="form-select" aria-label="Default select example" name="curso" th:switch="${curso_atual.id}" required>
                             <option selected disabled>Escolha seu curso</option>
-                            <option th:each="curso : ${cursos}" th:value="${curso.id}" th:text="${curso.nome_curso}"></option>
+                            <option th:each="curso : ${cursos}" th:value="${curso.id}" th:text="${curso.nome_curso}" th:case="${curso.id}" selected></option>
                         </select>
                     </div>
 
                     <div class="my-3">
-                        <button type="submit" class="btn btn-warning py-2 px-5"> Cadastrar </button>
+                        <button type="submit" class="btn btn-warning py-2 px-5"> Atualizar </button>
                     </div>
                 </div>
             </form >

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.amigoscode.spring_amigoscode.dtos.EstudanteBasicoDTO;
 import com.amigoscode.spring_amigoscode.dtos.EstudanteCursoDTO;
+import com.amigoscode.spring_amigoscode.models.CursoModel;
 import com.amigoscode.spring_amigoscode.models.EstudanteModel;
 import com.amigoscode.spring_amigoscode.repository.EstudanteRepository;
 
@@ -66,9 +67,9 @@ public class EstudanteService {
     }
 
     public EstudanteModel addEstudante(EstudanteModel estudante){
-        Optional<EstudanteModel> emailExiste = repository.findByEmail(estudante.getEmail());
+        Optional<EstudanteModel> estudanteComEsseEmail = repository.findByEmail(estudante.getEmail());
 
-        if(emailExiste.isPresent()){
+        if(estudanteComEsseEmail.isPresent()){
             throw new IllegalStateException("Email já cadastrado");
         } 
         
@@ -85,20 +86,33 @@ public class EstudanteService {
         return "Deletado com sucesso";
     }
 
-    public EstudanteModel atualizarEstudante(long id, EstudanteModel new_estudante){
-        Optional<EstudanteModel> estudanteExiste = repository.findById(id);
-        Optional<EstudanteModel> emailExiste = repository.findByEmail(new_estudante.getEmail());
-
+    public EstudanteModel atualizarEstudante(EstudanteModel new_estudante){
+        Optional<EstudanteModel> estudanteExiste = repository.findById(new_estudante.getId());
+        Optional<EstudanteModel> optEstudanteComEsseEmail = repository.findByEmail(new_estudante.getEmail());
+        
+        
+        
         String novo_email = new_estudante.getEmail();
         String novo_nome_estudante = new_estudante.getNome_estudante();
         LocalDate nova_data = new_estudante.getData_nasc();
+        CursoModel novo_curso = new_estudante.getCurso();
 
         if(!estudanteExiste.isPresent()){
             throw new IllegalStateException("Estudante não existe");
         } 
 
-        if(emailExiste.isPresent()){
-            throw new IllegalStateException("Email já cadastrado");
+        // se ja existir alguem com o email que foi atualizado
+        if(optEstudanteComEsseEmail.isPresent()) {
+        	
+        	// pegando o model de dentro do optional
+        	EstudanteModel estudanteComEsseEmail = optEstudanteComEsseEmail.get();
+        	
+        	// Temos que saber se o usuário que está atualizando é o dono desse email que ja existe
+            boolean emailJaEraDele = estudanteComEsseEmail.getId().equals( new_estudante.getId() );
+            
+            if(!emailJaEraDele) {
+            	throw new IllegalStateException("Email ja cadastrado");
+            }
         }
 
         if(novo_email.equals(null) || novo_nome_estudante.equals(null) || nova_data.equals(null)){
@@ -109,6 +123,7 @@ public class EstudanteService {
         estudante.setNome_estudante(novo_nome_estudante);
         estudante.setEmail(novo_email);
         estudante.setData_nasc(nova_data);
+        estudante.setCurso(novo_curso);
 
         return repository.save(estudante);
     }

@@ -63,14 +63,22 @@
             </thead>
             <tbody>
                 <tr th:each="estudante : ${lista}">
-                    <td th:text="*{estudante.id}"></td>
-                    <td th:text="*{estudante.nome_estudante}"></td>
-                    <td th:text="*{estudante.email}"></td>
-                    <td th:text="*{estudante.idade}"></td>
-                    <td th:text="*{estudante.nome_curso}"></td>
-                    <td th:text="*{estudante.carga_horaria}"></td>
+                    <td th:text="${estudante.id}"></td>
+                    <td th:text="${estudante.nome_estudante}"></td>
+                    <td th:text="${estudante.email}"></td>
+                    <td th:text="${estudante.idade}"></td>
+                    <td th:text="${estudante.nome_curso}"></td>
+                    <td th:text="${estudante.carga_horaria}"></td>
                     <td> <a th:href="@{/consulta/estudantes/{id}(id=${estudante.id})}"> DELETE </a> </td>
                     <td> <a th:href="@{/consulta/estudantes/atualizar/{id}(id=${estudante.id})}"> UPDATE </a> </td>
+                    
+                    <!--
+                    <form method="POST" action="/consulta/estudantes/alteracao" modelAttribute="EstudanteBasicoDTO">
+                    	<input type="hidden" th:value="${estudante.id}" name="id">
+                    	<td><button type="submit" class="btn btn-link"> UPDATE </button></td>
+                    </form >
+                    -->
+                    
                 </tr>
             </tbody>
         </table>
