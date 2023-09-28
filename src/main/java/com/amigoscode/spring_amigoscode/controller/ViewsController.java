@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,9 +34,11 @@ public class ViewsController {
         return "home";
     }
 
-    @GetMapping("cadastro")
+    /* ESTUDANTE */
+
+    @GetMapping("cadastro/estudante")
     public ModelAndView cadastro(){
-        ModelAndView mv = new ModelAndView("cadastro");
+        ModelAndView mv = new ModelAndView("EstudanteCadastro");
 
         List<CursoDTO> lista = cursoService.getCursos();
 
@@ -43,8 +46,8 @@ public class ViewsController {
         return mv;
     }
 
-    @PostMapping("cadastro")
-    public String dados_cadastro(@ModelAttribute("EstudanteModel") EstudanteModel estudante){  	
+    @PostMapping("cadastro/estudante")
+    public String cadastrar_estudante(@ModelAttribute("EstudanteModel") EstudanteModel estudante){  	
         try{
             estudanteService.addEstudante(estudante);
             return "redirect:/cadastro";
@@ -53,13 +56,48 @@ public class ViewsController {
         }
     }
 
-    @GetMapping("listagem")
-    public ModelAndView listagem(){
-        ModelAndView mv = new ModelAndView("listagem");
+    @GetMapping("consulta/estudantes")
+    public ModelAndView listar_estudantes(){
+        ModelAndView mv = new ModelAndView("EstudanteListagem");
        
         List<EstudanteCursoDTO> lista = estudanteService.getEstudantesWithCursos();
         
         mv.addObject("lista", lista);
         return mv;
+    }
+
+    @GetMapping("consulta/estudantes/{id}")
+    public String deletar_estudante(@PathVariable("id") Long id){
+        try{
+            estudanteService.deletarEstudante(id);
+            return "redirect:/consulta/estudantes";
+        } catch(Throwable e){
+            throw new IllegalStateException("Erro ao processar dados:\n"+e);
+        }
+    }
+
+    @GetMapping("consulta/estudantes/atualizar/{id}")
+    public ModelAndView enviar_form_de_atualizacao(@PathVariable("id") Long id){
+        ModelAndView mv = new ModelAndView("EstudanteAtualizacao");
+
+        /* 
+        EstudanteModel estudante = estudanteService.getEstudanteModelEspecifico(id);
+        mv.addObject("estudante", estudante);
+        
+        List<CursoDTO> cursos = cursoService.getCursos();
+        mv.addObject("cursos", cursos);
+        */
+
+        return mv;
+    }
+
+    @PostMapping("consulta/estudantes/atualizar/{id}")
+    public String atualizar_estudante(@PathVariable("id") Long id, @ModelAttribute("EstudanteModel") EstudanteModel estudante){
+        try{
+            estudanteService.atualizarEstudante(id, estudante);
+            return "redirect:/consulta/estudantes";
+        } catch(Throwable e){
+            throw new IllegalStateException("Erro ao atualizar dados:\n"+e);
+        }
     }
 }

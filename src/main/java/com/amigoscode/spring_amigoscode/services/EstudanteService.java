@@ -40,6 +40,17 @@ public class EstudanteService {
         return opt_dto;
     }
 
+    public EstudanteModel getEstudanteModelEspecifico(long id){
+        Optional<EstudanteModel> estudante = repository.findById(id);
+
+        if(estudante.isPresent()){
+            return estudante.get();
+        } else {
+            throw new IllegalStateException("Estudante não existe");
+        }
+        
+    }
+
     public List<EstudanteCursoDTO> getEstudantesWithCursos(){
         List<EstudanteCursoDTO> lista_dtos = repository.findAllEstudantesWithCurso().get();
 
